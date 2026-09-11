@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { mdiWeatherSunny, mdiStarOutline, mdiCalendarClockOutline, mdiFormatListBulletedSquare, mdiPlus } from '@mdi/js'
+import { mdiWeatherSunny, mdiStarOutline, mdiCalendarClockOutline, mdiFormatListBulletedSquare, mdiPlus, mdiDownload } from '@mdi/js'
 import { useListsStore } from '../../stores/lists'
 import { useUiStore } from '../../stores/ui'
+import { usePwaStore } from '../../stores/pwa'
 import AppIcon from '../icons/AppIcon.vue'
 import ListSidebarItem from '../lists/ListSidebarItem.vue'
 
 const listsStore = useListsStore()
 const uiStore = useUiStore()
+const pwaStore = usePwaStore()
 </script>
 
 <template>
@@ -38,4 +40,15 @@ const uiStore = useUiStore()
   >
     <AppIcon :path="mdiPlus" /> Nuova lista
   </button>
+
+  <template v-if="pwaStore.canInstall">
+    <hr />
+    <button
+      type="button"
+      class="btn btn-outline-primary d-inline-flex align-items-center gap-2"
+      @click="pwaStore.promptInstall()"
+    >
+      <AppIcon :path="mdiDownload" /> Installa app
+    </button>
+  </template>
 </template>
