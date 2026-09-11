@@ -4,6 +4,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Deve corrispondere al nome del repository: l'app è pubblicata su GitHub Pages
+  // all'indirizzo https://<utente>.github.io/ToDo/
+  base: '/ToDo/',
   plugins: [
     vue(),
     VitePWA({
@@ -14,7 +17,8 @@ export default defineConfig({
         short_name: 'ToDo',
         description: 'Gestione attività locale con task ricorrenti, vista Oggi e liste personalizzate',
         lang: 'it',
-        start_url: '/',
+        start_url: '/ToDo/',
+        scope: '/ToDo/',
         display: 'standalone',
         background_color: '#ffffff',
         theme_color: '#0d6efd',
