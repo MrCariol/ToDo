@@ -25,15 +25,8 @@ const completedTasks = computed(() => props.tasks.filter((t) => t.completed))
 </script>
 
 <template>
-  <div>
+  <div class="pb-5 mb-5">
     <h1 class="h3 mb-3">{{ title }}</h1>
-
-    <QuickAddTask
-      class="mb-3"
-      :list-id="quickAddListId"
-      :due-date="quickAddDueDate"
-      :important="quickAddImportant"
-    />
 
     <SuggestionsPanel v-if="suggestions.length > 0" class="mb-3" :suggestions="suggestions" />
 
@@ -58,5 +51,13 @@ const completedTasks = computed(() => props.tasks.filter((t) => t.completed))
         <TaskListItem v-for="task in completedTasks" :key="task.id" :task="task" />
       </ul>
     </div>
+  </div>
+
+  <div class="fixed-bottom bg-body border-top shadow-sm p-3">
+    <QuickAddTask
+      :list-id="quickAddListId"
+      :due-date="quickAddDueDate"
+      :important="quickAddImportant"
+    />
   </div>
 </template>
