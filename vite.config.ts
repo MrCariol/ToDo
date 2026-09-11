@@ -10,11 +10,12 @@ export default defineConfig({
   plugins: [
     vue(),
     VitePWA({
-      registerType: 'autoUpdate',
+      // 'prompt': una nuova versione resta in attesa finché l'utente non conferma
+      // dall'alert di aggiornamento (vedi App.vue / UpdateAlert.vue), non si ricarica da sola.
+      registerType: 'prompt',
       injectRegister: false,
       workbox: {
         clientsClaim: true,
-        skipWaiting: true,
       },
       includeAssets: ['favicon.svg'],
       manifest: {

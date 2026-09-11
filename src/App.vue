@@ -4,13 +4,14 @@ import { useRegisterSW } from 'virtual:pwa-register/vue'
 import { useTasksStore } from './stores/tasks'
 import { useListsStore } from './stores/lists'
 import AppShell from './components/layout/AppShell.vue'
+import UpdateAlert from './components/layout/UpdateAlert.vue'
 
 const UPDATE_CHECK_INTERVAL_MS = 60 * 1000
 
-// registerType 'autoUpdate' (vite.config.ts): una nuova versione si attiva e ricarica
-// la pagina da sola, senza chiedere conferma. Il controllo periodico serve perché,
-// essendo una SPA, l'utente potrebbe non fare mai un reload completo che lo attiverebbe.
-useRegisterSW({
+// registerType 'prompt' (vite.config.ts): una nuova versione resta in attesa finché
+// non viene confermata dall'alert. Il controllo periodico serve perché, essendo una
+// SPA, l'utente potrebbe non fare mai un reload completo che lo rileverebbe da solo.
+const { needRefresh, updateServiceWorker } = useRegisterSW({
   immediate: true,
   onRegisteredSW(swUrl, registration) {
     if (!registration) return
@@ -25,6 +26,8 @@ useRegisterSW({
     }, UPDATE_CHECK_INTERVAL_MS)
   },
 })
+
+const updateDismissed = ref(false)
 
 const tasksStore = useTasksStore()
 const listsStore = useListsStore()
@@ -53,4 +56,10 @@ onUnmounted(() => {
       <span class="visually-hidden">Caricamento...</span>
     </div>
   </div>
+
+  <UpdateAlert
+    :show="needRefresh && !updateDismissed"
+    @update="updateServiceWorker()"
+    @dismiss="updateDismissed = true"
+  />
 </template>
