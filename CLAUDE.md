@@ -8,6 +8,12 @@ Local-first ToDo PWA (Vue 3 + TypeScript + Vite). All data lives in IndexedDB in
 
 Code comments and some UI strings are in Italian; keep new comments in Italian for consistency.
 
+### Branch naming
+
+Use `type/short-description` (e.g. `feat/recurring-tasks`, `fix/today-cleanup`, `docs/add-claude-md`),
+not auto-generated codenames. If a session starts on an auto-generated branch, rename it to a descriptive
+one before pushing.
+
 ## Commands
 
 - `npm run dev` — start Vite dev server
